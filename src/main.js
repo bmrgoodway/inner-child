@@ -783,6 +783,17 @@ document.addEventListener('click', (e) => {
   if (act === 'reset') { resetAll(); return; }
 });
 
+// 개별로 상세 해설을 열고 닫아도 펼치기/접기 버튼 글자가 실제 상태와 맞도록 맞춥니다.
+document.addEventListener('toggle', (e) => {
+  if (!e.target.closest || !e.target.closest('#detail-list')) return;
+  const items = [...document.querySelectorAll('#detail-list details')];
+  const btn = document.querySelector('[data-act="toggle-details"]');
+  if (!btn || !items.length) return;
+  const allOpen = items.every((d) => d.open);
+  btn.textContent = allOpen ? '상세 해설 접기 ▴' : '상세 해설 펼치기 ▾';
+  btn.setAttribute('aria-expanded', String(allOpen));
+}, true);
+
 document.addEventListener('input', (e) => {
   const el = e.target.closest('[data-memo]');
   if (!el) return;
