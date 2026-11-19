@@ -1,0 +1,12 @@
+{
+  "slug": "inner-child",
+  "name": "내면 아이 진단 프로그램",
+  "schema": "inner_child",
+  "db_role": "inner_child_dev",
+  "bucket": "inner-child",
+  "function": "inner-child-fn",
+  "secret_prefix": "INNER_CHILD_",
+  "supabase_ref": "wjvqavianqceeyyxonfg",
+  "url": "https://bmrgoodway.github.io/inner-child/",
+  "template": "bmr-app-templates v2"
+}
