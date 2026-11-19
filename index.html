@@ -3,31 +3,59 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>내면 아이 진단 프로그램 · 준비 중 · BMR APPS</title>
-<meta name="description" content="내면 아이 진단 프로그램 — 준비 중인 페이지입니다 (BMR APPS)">
-<meta name="theme-color" content="#0abbee">
+<title>내면 아이 진단 프로그램 · GOODWAY APPS</title>
+<meta name="description" content="8가지 내면아이 체크리스트로 나의 내면을 진단하고, 내면아이 종합 정리표까지 한 번에. 로그인 없이 바로 시작하며 응답은 이 브라우저에만 저장됩니다.">
+<meta name="theme-color" content="#f7f4ec">
+<meta name="color-scheme" content="light dark">
 <meta name="robots" content="noindex">
 <link rel="icon" href="https://wjvqavianqceeyyxonfg.supabase.co/functions/v1/hub-favicon?slug=inner-child">
 </head>
 <body>
-<!-- 준비 중 안내 페이지입니다. 앱을 만들면 이 파일(index.html)을 내 앱 화면으로 바꾸세요.
-     개발에 필요한 정보는 BMR APPS 허브의 '내 서비스 정보 → 개발 정보'와 저장소 README.md 에 있습니다. -->
+<a class="skip" href="#main">본문으로 바로 가기</a>
+
 <header class="top">
-  <a class="mark" href="https://bmrgoodway.github.io/" aria-label="BMR APPS 메인 화면"><span>BMR</span><span>APPS</span></a>
+  <a class="mark" href="#/" aria-label="내면 아이 진단 프로그램 홈">
+    <svg viewBox="0 0 48 48" role="img" aria-hidden="true" focusable="false">
+      <rect x="3" y="3" width="42" height="42" fill="#ffd400" stroke="#000" stroke-width="2.5"/>
+      <circle cx="15" cy="15" r="4.5" fill="#fff" stroke="#000" stroke-width="2.2"/>
+      <circle cx="33" cy="15" r="4.5" fill="#fff" stroke="#000" stroke-width="2.2"/>
+      <circle cx="24" cy="28" r="10" fill="#fff" stroke="#000" stroke-width="2.4"/>
+      <circle cx="20" cy="26" r="1.7" fill="#000"/>
+      <circle cx="28" cy="26" r="1.7" fill="#000"/>
+      <path d="M20.5 31.5c1.9 1.9 5.1 1.9 7 0" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round"/>
+    </svg>
+  </a>
+  <div class="brand">
+    <b>내면 아이 진단 프로그램</b>
+    <small>GOODWAY APPS</small>
+  </div>
+
+  <nav class="nav" aria-label="화면 고르기">
+    <a class="nav-item" href="#/" data-nav="home">진단</a>
+    <a class="nav-item" href="#/result" data-nav="result">종합 정리</a>
+  </nav>
+
+  <div class="top-right">
+    <button type="button" class="icon-btn" id="theme" aria-label="어두운 화면으로 바꾸기" title="화면 밝기" aria-pressed="false">
+      <span aria-hidden="true">◐</span>
+    </button>
+    <button type="button" class="btn ghost sm" id="reset-top">새로 시작</button>
+  </div>
 </header>
-<main class="wrap">
-  <section class="hero">
-    <div class="copy">
-      <span class="eyebrow">준비 중</span>
-      <h1 data-app-name>내면 아이 진단 프로그램</h1>
-      <p class="desc" data-app-desc hidden></p>
-      <p class="notice"><b>준비 중인 페이지입니다.</b> 곧 이 주소에서 서비스를 열 예정이에요.</p>
-      <a class="btn" href="https://bmrgoodway.github.io/">BMR APPS 서비스 둘러보기</a>
-    </div>
-    <div class="art" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><i class="e"></i><i class="f"></i></div>
-  </section>
+
+<main id="main" tabindex="-1">
+  <noscript><p class="wrap-narrow notice-strong">이 진단은 브라우저에서 바로 실행됩니다. 자바스크립트를 켜 주세요.</p></noscript>
+  <div id="app" class="app"></div>
 </main>
-<footer class="foot">별무리 개발자들이 함께 만들고 나누는 공간 · <a href="https://bmrgoodway.github.io/">BMR APPS</a></footer>
+
+<footer class="foot">
+  <p><b>내면 아이 진단 프로그램</b> · GOODWAY APPS</p>
+  <p class="foot-src">출처: 『좋은 관계를 만들기 위한 내면아이(INNER CHILD)』 이슬비 사랑 — 내면아이 강의 편 (김중호 교수 ‘내면아이 진단 및 치유’ 강의 내용을 수정 보완한 워크북)</p>
+  <p class="foot-src">이 진단은 스스로 돌아보기 위한 참고 자료이며, 의학적 진단이 아닙니다. 응답은 서버로 보내지 않고 이 브라우저에만 저장됩니다.</p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
 <script type="module" src="/src/main.js"></script>
 </body>
 </html>
