@@ -383,6 +383,49 @@ details.fold > .fold-body { padding: 0 12px 12px; }
 .top-card .body { padding: 14px; display: grid; gap: 12px; }
 .top-card .body .def li { font-size: 13px; }
 
+/* ---------- 종합 정리 · 핵심 요약 (1~3순위) ---------- */
+.core { display: flex; flex-direction: column; gap: 12px; }
+.core-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.core-head .eyebrow { background: var(--green); color: #fff; padding: 3px 9px; }
+.core-head h2 { margin-top: 5px; }
+.core-head p { font-size: 13px; font-weight: 750; color: var(--muted); }
+.core-card { border: var(--bw) solid var(--line); background: var(--paper); box-shadow: var(--shadow-lg); }
+.core-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 14px; border-bottom: var(--bw) solid var(--line); background: var(--yellow); color: #000; }
+.core-top .rank { width: 30px; height: 30px; display: grid; place-items: center; border: 2px solid #000; background: #fff; font-weight: 900; font-size: 15px; }
+.core-kicker { font-size: 12px; font-weight: 900; letter-spacing: 0.02em; }
+.core-top .sc { margin-left: auto; font-size: 12.5px; font-weight: 850; }
+.core-body { padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.core-line { font-size: clamp(19px, 3.2vw, 26px); font-weight: 900; line-height: 1.4; letter-spacing: -0.03em; }
+.core-line.sm { font-size: 15.5px; font-weight: 850; line-height: 1.5; letter-spacing: -0.02em; }
+.hl { background: var(--yellow); color: #000; padding: 0 5px; border: 1.5px solid #000; font-weight: 900; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.core-name { font-size: 13px; font-weight: 850; color: var(--muted); margin-top: -6px; }
+.core-name small { font-weight: 750; }
+.kw-badges { display: flex; flex-wrap: wrap; gap: 7px; margin: 0; padding: 0; list-style: none; }
+.kw-badges li { border: 2px solid var(--line); background: var(--paper-2); color: var(--ink); padding: 5px 11px; font-size: 13.5px; font-weight: 900; box-shadow: 2px 2px 0 var(--ink); }
+.kw-badges li:first-child { background: var(--yellow); color: #000; border-color: #000; box-shadow: 2px 2px 0 #000; }
+.kw-badges.sm li { font-size: 12px; padding: 3px 8px; box-shadow: 1.5px 1.5px 0 var(--ink); }
+.kw-badges.sm li:first-child { box-shadow: 1.5px 1.5px 0 #000; }
+.core-lines { display: flex; flex-direction: column; gap: 10px; border-top: 1.5px dashed var(--line-soft); padding-top: 12px; }
+.cl { display: grid; grid-template-columns: 26px 1fr; gap: 8px; align-items: start; }
+.cl .n { font-size: 15px; font-weight: 900; color: var(--muted); line-height: 1.5; }
+.cl .lb { display: inline-block; font-size: 11.5px; font-weight: 900; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 2px; }
+.cl p { font-size: 14.5px; line-height: 1.6; }
+.cl p + p { margin-top: 3px; }
+.cl.is-care { background: var(--yellow-soft); border: var(--bw) solid var(--line); padding: 10px 12px; box-shadow: var(--shadow-sm); }
+.cl.is-care .n { color: #7a5d00; }
+.cl.is-care .lb { background: var(--yellow); color: #000; border: 1.5px solid #000; padding: 0 7px; }
+.cl.is-care p { font-weight: 800; }
+.core-mini { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: stretch; }
+.core-card.mini { box-shadow: var(--shadow); }
+.core-card.mini .core-top { background: var(--paper-2); color: var(--ink); }
+.core-card.mini .core-top .rank { border-color: var(--line); background: var(--paper); color: var(--ink); }
+.core-card.mini .core-body { padding: 14px; gap: 9px; }
+.mini-care { font-size: 12.5px; line-height: 1.55; border-left: 6px solid var(--yellow); background: var(--paper-2); padding: 7px 9px; }
+.mini-care b { display: inline-block; margin-right: 3px; }
+[data-theme="dark"] .cl.is-care .n { color: var(--yellow); }
+[data-theme="dark"] .core-card.mini .core-top { background: var(--paper-2); }
+
+.table-hint { display: none; font-size: 12px; font-weight: 850; color: var(--muted); }
 .table-wrap { border: var(--bw) solid var(--line); background: var(--paper); box-shadow: var(--shadow); overflow-x: auto; }
 table.summary { width: 100%; border-collapse: collapse; font-size: 11.8px; min-width: 980px; table-layout: fixed; }
 table.summary col.c-name { width: 96px; }
@@ -397,6 +440,7 @@ table.summary td ul { margin: 0; padding-left: 13px; }
 table.summary td li { margin-bottom: 3px; }
 .cell-lead { font-size: 10.5px; font-weight: 900; color: var(--muted); margin-bottom: 4px; letter-spacing: 0.01em; }
 table.summary td.sc { width: 76px; text-align: center; font-weight: 850; white-space: nowrap; }
+table.summary td.kw { font-weight: 800; }
 table.summary td ul { margin: 0; padding-left: 14px; }
 table.summary tr.is-top td, table.summary tr.is-top th { background: var(--yellow-soft); }
 
@@ -462,6 +506,8 @@ table.summary tr.is-top td, table.summary tr.is-top th { background: var(--yello
 /* ---------- 좁은 화면 ---------- */
 @media (max-width: 860px) {
   .charts { grid-template-columns: 1fr; }
+  .core-mini { grid-template-columns: 1fr; }
+  .table-hint { display: block; margin: 0 0 7px; }
   .hero { grid-template-columns: 1fr; }
   .hero-copy { border-right: 0; border-bottom: var(--bw) solid var(--line); padding: 24px 20px 20px; }
   .hero-art { min-height: 150px; }
@@ -510,7 +556,10 @@ table.summary tr.is-top td, table.summary tr.is-top th { background: var(--yello
   html, body { background: #fff !important; background-image: none !important; font-size: 10.5pt; }
   .top, .foot, .toast, .no-print, .tabs, .btn-row, .nav, .icon-btn { display: none !important; }
   .app { max-width: none; padding: 0; }
-  .card, .chart-box, .top-card, .acc, .table-wrap, .quiz, .result-card { box-shadow: none !important; break-inside: avoid; }
+  .card, .chart-box, .top-card, .core-card, .acc, .table-wrap, .quiz, .result-card { box-shadow: none !important; break-inside: avoid; }
+  .core-line { font-size: 13pt; }
+  .kw-badges li, .core-card.mini .core-top .rank { box-shadow: none !important; }
+  .cl.is-care { box-shadow: none !important; }
   .charts { grid-template-columns: 1fr 1fr; }
   details > summary { list-style: none; }
   details:not([open]) > .fold-body, details:not([open]) > .acc-body { display: block !important; }

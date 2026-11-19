@@ -94,6 +94,10 @@ const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '
 const pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
 const toneClass = (area) => `t-${area.tone}`;
 
+// 핵심 요약의 **굵게** 표시를 살아 있는 강조(형광펜)로 바꿉니다. 먼저 escape 한 뒤 처리합니다.
+const rich = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<mark class="hl">$1</mark>');
+const plain = (s) => String(s ?? '').replace(/\*\*/g, '');
+
 function paintWidths() {
   document.querySelectorAll('[data-w]').forEach((el) => { el.style.width = `${el.dataset.w}%`; });
 }
@@ -498,6 +502,18 @@ function renderResult() {
         </div>
       </section>
 
+      <section class="core">
+        <div class="core-head">
+          <div>
+            <span class="eyebrow">CORE SUMMARY</span>
+            <h2>지금 나를 움직이는 내면아이</h2>
+          </div>
+          <p>점수가 가장 높은 내면아이부터 핵심만 골랐습니다.</p>
+        </div>
+        ${coreCardHTML(top[0])}
+        ${top.length > 1 ? `<div class="core-mini">${top.slice(1, 3).map((r, i) => miniCoreHTML(r, i + 2)).join('')}</div>` : ''}
+      </section>
+
       <section class="charts">
         <div class="chart-box">
           <h3>영역별 ‘예’ 비율 <small>0~100%</small></h3>
@@ -517,15 +533,9 @@ function renderResult() {
         </div>
       </section>
 
-      <section>
-        <div class="section-head"><h2>가장 두드러진 내면아이</h2><p>완료한 영역을 ‘예’ 비율 순으로 봅니다.</p></div>
-        <div class="top-list">
-          ${top.slice(0, 3).map((r, i) => topCardHTML(r, i + 1)).join('')}
-        </div>
-      </section>
-
       <section class="no-print">
-        <div class="section-head"><h2>한눈에 비교하는 종합 정리표</h2><p>PDF의 종합 정리표(양육태도 · 내면부모 · 내면아이의 특징 · 결혼생활 · 치유)를 표로 비교합니다.</p></div>
+        <div class="section-head"><h2>한눈에 비교하는 종합 정리표</h2><p>긴 설명은 접고, 영역마다 핵심만 한 줄로 비교합니다.</p></div>
+        <p class="table-hint">옆으로 넘겨 5개 항목을 모두 볼 수 있어요 →</p>
         <div class="table-wrap no-print">
           <table class="summary">
             <colgroup>
@@ -541,11 +551,11 @@ function renderResult() {
                 <tr class="${top.slice(0, 3).some((t) => t.area.no === r.area.no) ? 'is-top' : ''}">
                   <th scope="row"><b>${r.area.no}. ${esc(r.area.name)}</b><span>${esc(r.area.sub)}</span></th>
                   <td class="sc">${r.done ? `${r.yes}/${r.total}<br><small>${esc(r.band.label)}</small>` : `${r.ans}/${r.total}<br><small class="muted">진행 중</small>`}</td>
-                  ${summaryCell(r.area.care.양육태도)}
-                  ${summaryCell(r.area.care.내면부모)}
-                  ${summaryCell(r.area.care.내면아이, r.area.icHighlight)}
-                  ${summaryCell(r.area.care.결혼생활)}
-                  ${summaryCell(r.area.care.치유)}
+                  ${summaryCell(r.area, '양육')}
+                  ${summaryCell(r.area, '부모')}
+                  ${summaryCell(r.area, '아이')}
+                  ${summaryCell(r.area, '결혼')}
+                  ${summaryCell(r.area, '치유')}
                 </tr>`).join('')}
             </tbody>
           </table>
@@ -553,20 +563,23 @@ function renderResult() {
       </section>
 
       <section>
-        <div class="section-head"><h2>내면아이 종합 정리표</h2><p>영역별로 점수 · 양육태도 · 내면부모 · 내면아이의 특징 · 결혼생활 · 치유 · 남긴 메모를 펼쳐 봅니다.</p></div>
-        <div class="acc">
+        <div class="section-head">
+          <div><h2>영역별 상세 해설</h2><p>양육 태도 · 내면 부모 · 내면아이 · 결혼생활 · 치유 전체 내용입니다. 필요할 때만 펼쳐 보세요.</p></div>
+          <button type="button" class="btn sm no-print" data-act="toggle-details" aria-expanded="false" aria-controls="detail-list">상세 해설 펼치기 ▾</button>
+        </div>
+        <div class="acc" id="detail-list">
           ${rows.map((r) => accItemHTML(r)).join('')}
         </div>
       </section>
 
-      <section>
-        <div class="section-head"><h2>내가 남긴 기억과 메모</h2><p>${memoCount() ? `${memoCount()}개 영역에 기록했습니다.` : '아직 남긴 메모가 없습니다.'}</p></div>
+      ${memoCount() ? `<section>
+        <div class="section-head"><h2>내가 남긴 기억과 메모</h2><p>${memoCount()}개 영역에 기록했습니다.</p></div>
         ${memoListHTML()}
-      </section>
+      </section>` : ''}
 
       <section class="card card-pad stack-sm no-print">
         <h3>이 기기에 저장된 기록</h3>
-        <p class="muted fs-13">응답과 메모는 서버로 보내지 않고 이 브라우저에만 저장됩니다. 새로 시작하면 지금 기록이 지워집니다.</p>
+        <p class="muted fs-13">응답과 메모는 서버로 보내지 않고 이 브라우저에만 저장됩니다. 메모는 각 영역을 마친 결과 화면에서 남길 수 있고, 새로 시작하면 지금 기록이 지워집니다.</p>
         <div class="btn-row">
           <button type="button" class="btn" data-act="reset">초기화 / 새로 시작</button>
           <button type="button" class="btn" data-act="print">인쇄 / PDF 저장</button>
@@ -575,27 +588,51 @@ function renderResult() {
     </div>`;
 }
 
-function summaryCell(items, lead) {
-  if (!items || !items.length) return `<td class="muted fs-115">원문에 별도 정리 없음</td>`;
-  return `<td>${lead ? `<p class="cell-lead">${esc(lead)}</p>` : ''}<ul>${items.slice(0, 3).map((x) => `<li>${esc(x)}</li>`).join('')}</ul></td>`;
+// 종합 정리표: 원문 불릿 전체 대신 한 줄 키워드만 — 표가 한눈에 스캔됩니다.
+function summaryCell(area, key) {
+  const v = area.core && area.core.table ? area.core.table[key] : '';
+  return `<td class="kw">${v ? esc(v) : '<span class="muted">—</span>'}</td>`;
 }
 
-function topCardHTML(r, rank) {
+// 1순위 — 한 줄 진단 · 핵심 키워드 · 핵심 3줄 요약
+function coreCardHTML(r) {
   const a = r.area;
+  const c = a.core;
   return `
-    <article class="top-card">
-      <header>
-        <span class="rank">${rank}</span>
-        <b>${a.no}. ${esc(a.name)} — ${esc(a.sub)}</b>
-        <span class="sc">‘예’ ${r.yes}/${r.total} (${pct(r.yes, r.total)}%) · ${esc(r.band.label)}</span>
-      </header>
-      <div class="body">
-        <p class="fs-135 muted">${esc(a.intro)}</p>
-        <div class="defs">
-          ${defHTML('ic', '내면아이의 특징', a.care.내면아이.slice(0, 6))}
-          ${defHTML('ip', '내면 부모', a.care.내면부모.slice(0, 4))}
-          ${defHTML('heal', '치유 · 돌봄 포인트', a.care.치유.slice(0, 4))}
+    <article class="core-card">
+      <div class="core-top">
+        <span class="rank">1</span>
+        <span class="core-kicker">가장 두드러진 내면아이</span>
+        <span class="sc">‘예’ ${r.yes}/${r.total} · ${pct(r.yes, r.total)}% · ${esc(r.band.label)}</span>
+      </div>
+      <div class="core-body">
+        <p class="core-line">${rich(c.line)}</p>
+        <p class="core-name">${a.no}번 영역 — <small>${esc(a.sub)}</small></p>
+        <ul class="kw-badges">${c.keywords.map((k) => `<li>${esc(k)}</li>`).join('')}</ul>
+        <div class="core-lines">
+          <div class="cl"><span class="n" aria-hidden="true">①</span><div><span class="lb">뿌리 · 양육 태도</span><p>${esc(c.root)}</p></div></div>
+          <div class="cl"><span class="n" aria-hidden="true">②</span><div><span class="lb">지금 나타나는 모습</span>${c.patterns.map((p) => `<p>${rich(p)}</p>`).join('')}</div></div>
+          <div class="cl is-care"><span class="n" aria-hidden="true">③</span><div><span class="lb">오늘의 치유 · 돌봄</span><p>${esc(c.care)}</p></div></div>
         </div>
+      </div>
+    </article>`;
+}
+
+// 2~3순위 — 같은 형식의 압축 카드
+function miniCoreHTML(r, rank) {
+  const a = r.area;
+  const c = a.core;
+  return `
+    <article class="core-card mini">
+      <div class="core-top">
+        <span class="rank">${rank}</span>
+        <span class="core-kicker">${a.no}. ${esc(a.name)} · ${esc(a.sub)}</span>
+        <span class="sc">‘예’ ${r.yes}/${r.total} · ${pct(r.yes, r.total)}%</span>
+      </div>
+      <div class="core-body">
+        <p class="core-line sm">${rich(c.patterns[0])}</p>
+        <ul class="kw-badges sm">${c.keywords.slice(0, 3).map((k) => `<li>${esc(k)}</li>`).join('')}</ul>
+        <p class="mini-care"><b>오늘의 돌봄</b> ${esc(c.care)}</p>
       </div>
     </article>`;
 }
@@ -735,6 +772,14 @@ document.addEventListener('click', (e) => {
   if (act === 'go') { e.preventDefault(); location.hash = el.dataset.href; return; }
   if (act === 'print') { openAllDetails(); window.print(); return; }
   if (act === 'copy') { copySummary(); return; }
+  if (act === 'toggle-details') {
+    const items = [...document.querySelectorAll('#detail-list details')];
+    const open = items.some((d) => !d.open);
+    items.forEach((d) => { d.open = open; });
+    el.textContent = open ? '상세 해설 접기 ▴' : '상세 해설 펼치기 ▾';
+    el.setAttribute('aria-expanded', String(open));
+    return;
+  }
   if (act === 'reset') { resetAll(); return; }
 });
 
@@ -802,6 +847,11 @@ function copySummary() {
     lines.push(`${r.area.no}. ${r.area.name} (${r.area.sub}) — ${r.done ? `‘예’ ${r.yes}/${r.total} · ${r.band.label}(${r.band.range})` : `응답 ${r.ans}/${r.total} · 진행 중`}`);
   }
   if (top.length) {
+    lines.push('');
+    lines.push('[핵심]');
+    lines.push(`${top[0].area.no}. ${top[0].area.name} — ${plain(top[0].area.core.line)}`);
+    lines.push(`· 키워드: ${top[0].area.core.keywords.join(' / ')}`);
+    lines.push(`· 오늘의 돌봄: ${top[0].area.core.care}`);
     lines.push('');
     lines.push('[가장 두드러진 내면아이]');
     top.slice(0, 3).forEach((r, i) => {
