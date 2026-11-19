@@ -543,7 +543,7 @@ function renderResult() {
                   <td class="sc">${r.done ? `${r.yes}/${r.total}<br><small>${esc(r.band.label)}</small>` : `${r.ans}/${r.total}<br><small class="muted">진행 중</small>`}</td>
                   ${summaryCell(r.area.care.양육태도)}
                   ${summaryCell(r.area.care.내면부모)}
-                  ${summaryCell(r.area.care.내면아이)}
+                  ${summaryCell(r.area.care.내면아이, r.area.icHighlight)}
                   ${summaryCell(r.area.care.결혼생활)}
                   ${summaryCell(r.area.care.치유)}
                 </tr>`).join('')}
@@ -575,9 +575,9 @@ function renderResult() {
     </div>`;
 }
 
-function summaryCell(items) {
+function summaryCell(items, lead) {
   if (!items || !items.length) return `<td class="muted fs-115">원문에 별도 정리 없음</td>`;
-  return `<td><ul>${items.slice(0, 3).map((x) => `<li>${esc(x)}</li>`).join('')}</ul></td>`;
+  return `<td>${lead ? `<p class="cell-lead">${esc(lead)}</p>` : ''}<ul>${items.slice(0, 3).map((x) => `<li>${esc(x)}</li>`).join('')}</ul></td>`;
 }
 
 function topCardHTML(r, rank) {
@@ -615,7 +615,7 @@ function accItemHTML(r) {
       <div class="acc-body">
         <div class="def parent wide"><h4>양육 태도</h4><ul>${a.care.양육태도.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>
         <div class="def ip"><h4>내면 부모 (Inner Parent)</h4><ul>${a.care.내면부모.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>
-        <div class="def ic"><h4>내면아이의 특징 (Inner Child)</h4><ul>${a.care.내면아이.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>
+        <div class="def ic"><h4>내면아이의 특징 (Inner Child)${a.icHighlight ? ` — ${esc(a.icHighlight)}` : ''}</h4><ul>${a.care.내면아이.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>
         ${a.care.결혼생활.length ? `<div class="def marriage wide"><h4>결혼생활</h4><ul>${a.care.결혼생활.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
         <div class="def heal wide"><h4>치유 · 돌봄 포인트</h4><ul>${a.care.치유.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>
         ${hasMemo ? `<div class="memo wide">

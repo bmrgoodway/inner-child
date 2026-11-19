@@ -395,6 +395,7 @@ table.summary tbody th span { font-size: 11.5px; font-weight: 800; color: var(--
 table.summary td { font-size: 11.8px; line-height: 1.45; }
 table.summary td ul { margin: 0; padding-left: 13px; }
 table.summary td li { margin-bottom: 3px; }
+.cell-lead { font-size: 10.5px; font-weight: 900; color: var(--muted); margin-bottom: 4px; letter-spacing: 0.01em; }
 table.summary td.sc { width: 76px; text-align: center; font-weight: 850; white-space: nowrap; }
 table.summary td ul { margin: 0; padding-left: 14px; }
 table.summary tr.is-top td, table.summary tr.is-top th { background: var(--yellow-soft); }
