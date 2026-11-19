@@ -421,7 +421,7 @@ details.fold > .fold-body { padding: 0 12px 12px; }
 .core-card.mini .core-top .rank { border-color: var(--line); background: var(--paper); color: var(--ink); }
 .core-card.mini .core-body { padding: 14px; gap: 9px; }
 .mini-care { font-size: 12.5px; line-height: 1.55; border-left: 6px solid var(--yellow); background: var(--paper-2); padding: 7px 9px; }
-.mini-care b { display: inline-block; margin-right: 3px; }
+.mini-care b { display: block; font-size: 11.5px; letter-spacing: 0.03em; margin-bottom: 2px; }
 [data-theme="dark"] .cl.is-care .n { color: var(--yellow); }
 [data-theme="dark"] .core-card.mini .core-top { background: var(--paper-2); }
 

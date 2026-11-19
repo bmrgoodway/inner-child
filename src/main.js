@@ -632,7 +632,7 @@ function miniCoreHTML(r, rank) {
       <div class="core-body">
         <p class="core-line sm">${rich(c.patterns[0])}</p>
         <ul class="kw-badges sm">${c.keywords.slice(0, 3).map((k) => `<li>${esc(k)}</li>`).join('')}</ul>
-        <p class="mini-care"><b>오늘의 돌봄</b> ${esc(c.care)}</p>
+        <p class="mini-care"><b>돌봄 포인트</b> ${esc(c.care)}</p>
       </div>
     </article>`;
 }
